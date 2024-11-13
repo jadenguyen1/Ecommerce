@@ -3,9 +3,16 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    # Filter for the newest books (latest 10 created)
+    if params[:filter] == "newest"
+      @books = Book.order(created_at: :desc).limit(10)
+    # Filter for books on sale (assuming there's a boolean 'sale' attribute)
+    elsif params[:filter] == "sale"
+      @books = Book.where(sale: true)
+    else
+      @books = Book.all
+    end
   end
-
   # GET /books/1 or /books/1.json
   def show
   end
