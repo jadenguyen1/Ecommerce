@@ -1,52 +1,57 @@
-<%= form_with(model: book) do |form| %>
-  <% if book.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+<%= form_with(model: book, class: "container mt-5") do |form| %>
+  <div class="card shadow-sm border-light p-4" >
+    <div class="card-body">
+      <% if book.errors.any? %>
+        <div class="alert alert-danger">
+          <h4><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+          <ul>
+            <% book.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% book.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Edit Book</h1>
+
+      <div class="mb-3">
+        <%= form.label :title, "Book Title", class: "form-label" %>
+        <%= form.text_field :title, class: "form-control", placeholder: "Enter the book title" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :description, "Description", class: "form-label" %>
+        <%= form.text_area :description, rows: 5, class: "form-control", placeholder: "Enter a short description of the book" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :stock, "Stock", class: "form-label" %>
+        <%= form.number_field :stock, min: 0, step: 1, class: "form-control", style: "width: 80px;", placeholder: "0" %>
+      </div>
+
+      <div class="mb-3 form-check">
+        <%= form.check_box :sale, class: "form-check-input" %>
+        <%= form.label :sale, "On Sale", class: "form-check-label" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :price, "Price ($)", class: "form-label" %>
+        <%= form.text_field :price, class: "form-control", placeholder: "Enter the price" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :author_id, "Author", class: "form-label" %>
+        <%= form.collection_select :author_id, Author.all, :id, :name, { prompt: "Select an Author" }, { class: "form-select" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :genre_id, "Genre", class: "form-label" %>
+        <%= form.collection_select :genre_id, Genre.all, :id, :name, { prompt: "Select a Genre" }, { class: "form-select" } %>
+      </div>
+
+      <div class="text-center">
+        <%= form.submit "Save Book", class: "btn btn-primary" %>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
-  </div>
-
-  <div>
-    <%= form.label :stock, style: "display: block" %>
-    <%= form.number_field :stock %>
-  </div>
-
-  <div>
-    <%= form.label :sale, style: "display: block" %>
-    <%= form.check_box :sale %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div>
-    <%= form.label :author_id, style: "display: block" %>
-    <%= form.number_field :author_id %>
-  </div>
-
-  <div>
-    <%= form.label :genre_id, style: "display: block" %>
-    <%= form.number_field :genre_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>

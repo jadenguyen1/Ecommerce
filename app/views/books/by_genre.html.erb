@@ -1,11 +1,27 @@
-<!-- app/views/books/by_genre.html.erb -->
-<h1>Books in <%= @genre.name %></h1>
-<ul>
-  <% @books.each do |book| %>
-    <li>
-      <h3><%= link_to book.title, book_path(book) %></h3>
-      <p><%= book.description %></p>
-      <p><strong>Price:</strong> $<%= book.price %></p>
-    </li>
-  <% end %>
-</ul>
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, @genre.name %>
+
+<h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;"><%= @genre.name %></h1>
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <% @genre.books.each do |book| %>
+      <div class="col">
+        <div class="card h-100 border-light shadow-sm" style="background-color: #f4f1e1; border-radius: 12px; padding: 5px; background: #f8f3e4; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-height: 300px;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-center" style="font-size: 1.4rem; color: #4d3f2b;"><%= book.title %></h5>
+            <p class="card-subtitle mb-2 text-center" style="color: #4d3f2b;">
+              <%= link_to book.author.name, author_path(book.author), class: 'text-decoration-none' %>
+            </p>
+            <p class="card-text" style="font-size: 0.9rem; color: #4d3f2b; flex-grow: 1; overflow: hidden;"><%= truncate(book.description, length: 150) %></p>
+            <p class="text-center" style="color: #4d3f2b;"><strong>Price:</strong> $<%= book.price %></p>
+            <div class="text-center">
+              <%= link_to "Show this book", book, class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

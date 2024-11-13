@@ -8,6 +8,7 @@ class GenresController < ApplicationController
 
   # GET /genres/1 or /genres/1.json
   def show
+    @genre = Genre.find(params[:id])
   end
 
   # GET /genres/new
