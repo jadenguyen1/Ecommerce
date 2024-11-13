@@ -2,13 +2,14 @@ Rails.application.routes.draw do
   resources :order_items
   resources :orders
   resources :authors
-  resources :genres
   resources :books
   resources :provinces
   resources :users
   resources :admins
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  resources :genres, only: [] do
+    get 'books', to: 'books#by_genre', on: :member
+  end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

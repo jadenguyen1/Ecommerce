@@ -19,6 +19,11 @@ class BooksController < ApplicationController
   def edit
   end
 
+  def by_genre
+    @genre = Genre.find(params[:id])
+    @books = @genre.books
+  end
+
   # POST /books or /books.json
   def create
     @book = Book.new(book_params)

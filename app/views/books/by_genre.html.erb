@@ -1,0 +1,11 @@
+<!-- app/views/books/by_genre.html.erb -->
+<h1>Books in <%= @genre.name %></h1>
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <h3><%= link_to book.title, book_path(book) %></h3>
+      <p><%= book.description %></p>
+      <p><strong>Price:</strong> $<%= book.price %></p>
+    </li>
+  <% end %>
+</ul>
