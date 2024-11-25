@@ -1,10 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @author %>
+<% content_for :title, @author.name %>
 
-<div>
-  <%= link_to "Edit this author", edit_author_path(@author) %> |
-  <%= link_to "Back to authors", authors_path %>
+<div class="container my-4">
+  <div class="text-center">
+    <h2 style="font-family: 'Merriweather', serif; color: #4d3f2b;">Books by <%= @author.name %></h2>
+  </div>
 
-  <%= button_to "Destroy this author", @author, method: :delete %>
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <% @author.books.each do |book| %>
+      <div class="col">
+        <div id="<%= dom_id @author %>" class="card h-100 border-light shadow-sm" style="background-color: #f4f1e1; border-radius: 12px; padding: 5px; background: #f8f3e4; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-height: 300px;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-center" style="font-size: 1.4rem; color: #4d3f2b;"><%= book.title %></h5>
+            <p class="card-text" style="font-size: 0.9rem; color: #4d3f2b; flex-grow: 1; overflow: hidden;"><%= truncate(book.description, length: 150) %></p>
+            <p class="text-center" style="color: #4d3f2b;"><strong>Price:</strong> $<%= book.price %></p>
+            <div class="text-center">
+              <%= link_to "View Book", book, class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center my-3">
+    <%= link_to "Back to Authors List", authors_path, class: 'btn btn-secondary' %>
+  </div>
 </div>

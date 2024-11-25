@@ -37,6 +37,14 @@ gem "bootsnap", require: false
 gem 'bootstrap', '~> 5.3'
 gem 'sassc-rails'
 gem 'jquery-rails'
+gem 'bcrypt', '~> 3.1.11'
+gem 'kaminari'
+gem 'kaminari-bootstrap'
+
+
+
+
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

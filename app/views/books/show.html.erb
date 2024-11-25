@@ -1,10 +1,43 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @book %>
+<% content_for :title, @book.title %>
 
-<div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-light shadow-lg" style="background-color: #f4f1e1; border-radius: 12px; padding: 15px;">
+        <div class="card-body">
+          <h2 class="card-title text-center" style="font-size: 2rem; color: #4d3f2b;"><%= @book.title %></h2>
+          <p class="card-subtitle mb-3 text-center" style="color: #4d3f2b;">
+            <%= link_to @book.author.name, author_path(@book.author), class: 'text-decoration-none' %>
+          </p>
+          <p class="card-text" style="font-size: 1.1rem; color: #4d3f2b;"><%= @book.description %></p>
 
-  <%= button_to "Destroy this book", @book, method: :delete %>
+          <div class="d-flex justify-content-center align-items-center mb-1">
+            <p class="me-4" style="color: #4d3f2b;">
+              <strong>Price:</strong> $<%= @book.price %>
+            </p>
+            <p style="color: #4d3f2b;">
+              <strong>Stock:</strong> <%= @book.stock > 0 ? @book.stock : "Out of Stock" %>
+            </p>
+          </div>
+
+          <% if @book.sale %>
+            <p class="text-center" style="color: #ff4d4d;">
+              <strong>On Sale!</strong> Grab it before it’s gone!
+            </p>
+          <% else %>
+            <p class="text-center" style="color: #4d3f2b;">
+              <strong>Regular Price</strong>
+            </p>
+          <% end %>
+
+          <!-- Back to Books Link -->
+          <div class="text-center">
+            <%= link_to "Back to Books", books_path, class: 'btn btn-secondary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "sessions/new"
+  get "sessions/create"
+  get "sessions/destroy"
   get "search/index"
   resources :order_items
   resources :orders
@@ -12,6 +15,13 @@ Rails.application.routes.draw do
     get 'books', to: 'books#by_genre', on: :member
   end
   get 'search', to: 'search#index', as: 'search'
+
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'  # Handle logout
+
+  get 'signup', to: 'users#new'
+  post 'signup', to: 'users#create'
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

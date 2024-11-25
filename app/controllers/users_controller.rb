@@ -23,27 +23,30 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      # Log the user in by setting the session user_id
+      session[:user_id] = @user.id
+
+      # Redirect to the root page or user profile
+      redirect_to @user, notice: 'Account created successfully.'
+    else
+      logger.error "User creation failed: #{@user.errors.full_messages.join(', ')}"
+      flash.now[:alert] = 'Error creating account.'
+      render :new
     end
+  end
+
+  def user_params
+    params.require(:user).permit(:username, :password, :password_confirmation, :address, :province_id)
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to @user, notice: "User was successfully updated."
+    else
+      flash.now[:alert] = 'Error updating user.'
+      render :edit
     end
   end
 
@@ -57,14 +60,8 @@ class UsersController < ApplicationController
     end
   end
 
-  private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
-
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:username, :password, :address, :province_id)
-    end
-end
+  end

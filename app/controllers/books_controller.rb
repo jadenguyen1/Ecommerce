@@ -12,11 +12,14 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
+
+    @books = Book.page(params[:page]).per(15)
+
   end
   # GET /books/1 or /books/1.json
   def show
+    @book = Book.find(params[:id])
   end
-
   # GET /books/new
   def new
     @book = Book.new

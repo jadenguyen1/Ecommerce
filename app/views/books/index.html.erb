@@ -30,6 +30,8 @@
       </div>
     <% end %>
   </div>
-</div>
 
-<%= link_to "New book", new_book_path, class: 'btn btn-success my-3 d-block mx-auto' %>
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <%= paginate @books, class: 'pagination justify-content-center' %>
+  </div>

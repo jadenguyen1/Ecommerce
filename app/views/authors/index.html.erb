@@ -2,15 +2,20 @@
 
 <% content_for :title, "Authors" %>
 
-<h1>Authors</h1>
+<h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Authors</h1>
 
-<div id="authors">
-  <% @authors.each do |author| %>
-    <%= render author %>
-    <p>
-      <%= link_to "Show this author", author %>
-    </p>
-  <% end %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <ul class="list-unstyled text-center">
+        <% @authors.each do |author| %>
+          <li class="mb-2" style="font-size: 1.25rem; color: #4d3f2b;">
+            <%= link_to author.name, author_path(author), class: 'text-decoration-none' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<%= link_to "New author", new_author_path %>
+<%= link_to "New Author", new_author_path, class: 'btn btn-success my-3 d-block mx-auto' %>

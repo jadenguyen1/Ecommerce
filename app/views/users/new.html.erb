@@ -1,11 +1,54 @@
-<% content_for :title, "New user" %>
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
 
-<h1>New user</h1>
+<h1 class="text-center mb-4" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Sign Up</h1>
 
-<%= render "form", user: @user %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <%= form_with model: @user, url: signup_path, method: :post, data: { turbo_action: "replace" } do |form| %>
+        <div class="row g-3">
 
-<br>
+          <!-- Username -->
+          <div class="col-12">
+            <%= form.label :username, class: 'form-label' %>
+            <%= form.text_field :username, class: 'form-control' %>
+          </div>
 
-<div>
-  <%= link_to "Back to users", users_path %>
+          <!-- Password -->
+          <div class="col-12">
+            <%= form.label :password, class: 'form-label' %>
+            <%= form.password_field :password, class: 'form-control' %>
+          </div>
+
+          <!-- Password Confirmation -->
+          <div class="col-12">
+            <%= form.label :password_confirmation, class: 'form-label' %>
+            <%= form.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+
+          <!-- Address -->
+          <div class="col-12">
+            <%= form.label :address, class: 'form-label' %>
+            <%= form.text_field :address, class: 'form-control' %>
+          </div>
+
+          <!-- Province Dropdown -->
+          <div class="col-12">
+            <%= form.label :province_id, "Select Province", class: 'form-label' %>
+            <%= form.select :province_id, Province.all.collect { |province| [province.name, province.id] }, { prompt: "Choose a province" }, class: 'form-select' %>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12 text-center">
+            <%= form.submit "Create Account", class: 'btn btn-primary mt-3' %>
+          </div>
+        </div>
+      <% end %>
+
+      <p class="text-center mt-3">
+        Already have an account? <%= link_to "Log In", login_path %>
+      </p>
+    </div>
+  </div>
 </div>

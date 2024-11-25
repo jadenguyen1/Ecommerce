@@ -1,0 +1,36 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+
+<h1 class="text-center mb-4" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Log In</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <%= form_with url: login_path, local: true, data: { turbo_action: "replace" } do |form| %>
+        <div class="row g-3">
+
+          <!-- Username -->
+          <div class="col-12">
+            <%= form.label :username, class: 'form-label' %>
+            <%= form.text_field :username, class: 'form-control' %>
+          </div>
+
+          <!-- Password -->
+          <div class="col-12">
+            <%= form.label :password, class: 'form-label' %>
+            <%= form.password_field :password, class: 'form-control' %>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12 text-center">
+            <%= form.submit "Log in", class: 'btn btn-primary mt-3' %>
+          </div>
+        </div>
+      <% end %>
+
+      <p class="text-center mt-3">
+        Don't have an account? <%= link_to "Sign up", signup_path %>
+      </p>
+    </div>
+  </div>
+</div>
