@@ -1,26 +1,12 @@
-class GenresController < ApplicationController
-  before_action :set_genre, only: %i[ show edit update destroy ]
-
-  # GET /genres or /genres.json
+class Admin::GenresController < Admin::DashboardController
   def index
     @genres = Genre.all
   end
 
-  # GET /genres/1 or /genres/1.json
-  def show
-    @genre = Genre.find(params[:id])
-  end
-
-  # GET /genres/new
   def new
     @genre = Genre.new
   end
 
-  # GET /genres/1/edit
-  def edit
-  end
-
-  # POST /genres or /genres.json
   def create
     @genre = Genre.new(genre_params)
     if @genre.save
@@ -30,7 +16,10 @@ class GenresController < ApplicationController
     end
   end
 
-  # PATCH/PUT /genres/1 or /genres/1.json
+  def edit
+    @genre = Genre.find(params[:id])
+  end
+
   def update
     if @genre.update(genre_params)
       redirect_to admin_genres_path, notice: "Genre successfully updated."
@@ -39,7 +28,6 @@ class GenresController < ApplicationController
     end
   end
 
-  # DELETE /genres/1 or /genres/1.json
   def destroy
     @genre = Genre.find(params[:id])
     if @genre.destroy
@@ -50,13 +38,8 @@ class GenresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_genre
-      @genre = Genre.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def genre_params
-      params.require(:genre).permit(:name)
-    end
+  def genre_params
+    params.require(:genre).permit(:name)
+  end
 end

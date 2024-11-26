@@ -1,0 +1,28 @@
+<%= form_with(model: author, class: "container mt-5") do |form| %>
+  <div class="card shadow-sm border-light p-4" >
+    <div class="card-body">
+      <% if author.errors.any? %>
+        <div class="alert alert-danger">
+          <h4><%= pluralize(author.errors.count, "error") %> prohibited this book from being saved:</h4>
+          <ul>
+            <% author.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">
+        <%= @author.new_record? ? "New Author" : "Edit Author" %>
+      </h1>
+      <div class="mb-3">
+        <%= form.label :name, "Author Name", class: "form-label" %>
+        <%= form.text_field :name, class: "form-control", placeholder: "Enter the author's name" %>
+      </div>
+
+      <div class="text-center">
+        <%= form.submit "Save Author", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -23,38 +23,30 @@ class AuthorsController < ApplicationController
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
-
-    respond_to do |format|
-      if @author.save
-        format.html { redirect_to @author, notice: "Author was successfully created." }
-        format.json { render :show, status: :created, location: @author }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @author.errors, status: :unprocessable_entity }
-      end
+    if @author.save
+      redirect_to admin_authors_path, notice: 'Author successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /authors/1 or /authors/1.json
   def update
-    respond_to do |format|
-      if @author.update(author_params)
-        format.html { redirect_to @author, notice: "Author was successfully updated." }
-        format.json { render :show, status: :ok, location: @author }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @author.errors, status: :unprocessable_entity }
-      end
+    @author = Author.find(params[:id])
+    if @author.update(author_params)
+      redirect_to admin_authors_path, notice: "Author successfully updated."
+    else
+      render :edit
     end
   end
 
   # DELETE /authors/1 or /authors/1.json
   def destroy
-    @author.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to authors_path, status: :see_other, notice: "Author was successfully destroyed." }
-      format.json { head :no_content }
+    @author = Author.find(params[:id])
+    if @author.destroy
+      redirect_to admin_authors_path, notice: "Author successfully deleted."
+    else
+      redirect_to admin_authors_path, alert: "Unable to delete the author."
     end
   end
 

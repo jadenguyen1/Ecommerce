@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Admin Dashboard</h1>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h3 style="color: #4d3f2b;">Books</h3>
+      <%= link_to "Manage Books", admin_books_path, class: "btn btn-primary btn-lg mt-2" %>
+    </div>
+    <div class="col-md-4 text-center">
+      <h3 style="color: #4d3f2b;">Authors</h3>
+      <%= link_to "Manage Authors", admin_authors_path, class: "btn btn-primary btn-lg mt-2" %>
+    </div>
+    <div class="col-md-4 text-center">
+      <h3 style="color: #4d3f2b;">Genres</h3>
+      <%= link_to "Manage Genres", admin_genres_path, class: "btn btn-primary btn-lg mt-2" %>
+    </div>
+  </div>
+</div>

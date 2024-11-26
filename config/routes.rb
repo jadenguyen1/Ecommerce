@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get "dashboard/index"
+  end
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
@@ -22,6 +25,18 @@ Rails.application.routes.draw do
 
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
+
+  namespace :admin do
+    get 'dashboard', to: 'dashboard#index'
+    resources :books
+    resources :genres
+    resources :authors
+    get 'edit_pages', to: 'dashboard#edit_pages'
+    patch 'update_pages', to: 'dashboard#update_pages'
+  end
+
+  get 'contact', to: 'pages#contact', as: 'contact'
+  get 'about', to: 'pages#about', as: 'about'
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

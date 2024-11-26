@@ -12,8 +12,9 @@
         </div>
       <% end %>
 
-      <h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Edit Book</h1>
-
+      <h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">
+        <%= @book.new_record? ? "New Book" : "Edit Book" %>
+      </h1>
       <div class="mb-3">
         <%= form.label :title, "Book Title", class: "form-label" %>
         <%= form.text_field :title, class: "form-control", placeholder: "Enter the book title" %>

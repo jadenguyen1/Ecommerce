@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">Manage Authors</h1>
+
+<div class="container">
+  <%= link_to "New Author", new_admin_author_path, class: "btn btn-success my-3" %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-sm">
+      <thead>
+        <tr>
+          <th style="width: 10%;">ID</th>
+          <th style="width: 75%;">Name</th>
+          <th style="width: 15;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @authors.each do |author| %>
+          <tr>
+            <td><%= author.id %></td>
+            <td><%= author.name %></td>
+            <td>
+              <div class="d-flex">
+                <%= link_to "Edit", edit_admin_author_path(author), class: "btn btn-warning btn-sm me-2" %>
+                <%= button_to "Delete", admin_author_path(author), method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Are you sure?" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

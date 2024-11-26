@@ -1,0 +1,5 @@
+<% content_for :title, @genre.new_record? ? "New Genre" : "Edit Genre" %>
+
+<%= render "form", genre: @genre %>
+
+<br>

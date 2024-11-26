@@ -7,4 +7,8 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8 }
   validates :province_id, presence: true
   validates :address, presence: true
+
+  def admin?
+    self.admin
+  end
 end

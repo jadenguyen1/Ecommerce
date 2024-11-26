@@ -1,0 +1,5 @@
+<% content_for :title, @book.new_record? ? "New Book" : "Edit Book" %>
+
+<%= render "form", book: @book %>
+
+<br>
