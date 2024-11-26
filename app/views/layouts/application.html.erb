@@ -29,10 +29,11 @@
         <% if session[:user_id] %>
           <!-- Use a flexbox row to align username and logout button -->
           <div class="d-flex align-items-center">
+          <% if current_user.admin? %>
+            <!-- Admin Dashboard Button -->
+            <%= link_to 'Admin Dashboard', admin_dashboard_path, class: "btn btn-outline-dark fs-5 me-2" %>
+          <% end %>
             <!-- Display username as a link to the user's profile -->
-            <% if current_user&.admin? %>
-              <%= link_to 'Admin Dashboard', admin_dashboard_path, class: 'btn btn-outline-dark fs-5 me-2' %>
-            <% end %>
             <%= link_to current_user.username, user_path(current_user), class: "btn btn-outline-dark fs-5 me-2" %>
 
             <!-- Logout Button -->
@@ -73,12 +74,6 @@
           </li>
           <li class="nav-item fs-5 px-2">
             <%= link_to 'Search', search_path, class: 'nav-link text-dark' %>
-          </li>
-          <li class="nav-item fs-5 px-2">
-            <%= link_to 'Contact', contact_path, class: 'nav-link text-dark' %>
-          </li>
-          <li class="nav-item fs-5 px-2">
-            <%= link_to 'About', about_path, class: 'nav-link text-dark' %>
           </li>
         </ul>
       </div>
