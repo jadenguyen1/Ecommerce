@@ -41,7 +41,8 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'activeadmin'
-
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
 
 
 

@@ -15,6 +15,12 @@
       <h1 class="mb-4 text-center" style="font-family: 'Merriweather', serif; color: #4d3f2b;">
         <%= @book.new_record? ? "New Book" : "Edit Book" %>
       </h1>
+
+      <div class="mb-3">
+        <%= form.label :image, "Upload Image", class: "form-label" %>
+        <%= form.file_field :image, class: "form-control", accept: "image/png, image/jpeg, image/jpg" %>
+      </div>
+
       <div class="mb-3">
         <%= form.label :title, "Book Title", class: "form-label" %>
         <%= form.text_field :title, class: "form-control", placeholder: "Enter the book title" %>

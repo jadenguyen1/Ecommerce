@@ -11,6 +11,7 @@
         <th>Author</th>
         <th>Genre</th>
         <th>Price</th>
+        <th>Image</th>
         <th></th>
       </tr>
     </thead>
@@ -21,6 +22,16 @@
           <td><%= book.author.name %></td>
           <td><%= book.genre.name %></td>
           <td>$<%= book.price %></td>
+          <td>
+            <% if book.image.attached? %>
+
+              <%= image_tag book.image.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+              <br>
+              <small><%= book.image.filename.to_s %></small>
+            <% else %>
+              <span>No Image</span>
+            <% end %>
+          </td>
           <td>
             <div class="d-flex">
               <%= link_to "Edit", edit_admin_book_path(book), class: "btn btn-warning btn-sm me-2" %>
