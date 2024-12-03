@@ -1,0 +1,47 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Your Shopping Cart" %>
+
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card border-light shadow-lg" style="background-color: #f4f1e1; border-radius: 12px; padding: 15px;">
+        <div class="card-body">
+          <h1 class="card-title text-center mb-4" style="font-size: 2rem; color: #4d3f2b;">Your Shopping Cart</h1>
+
+          <% if @cart_items.any? %>
+            <% @cart_items.each do |item| %>
+              <div class="card mb-4 shadow-sm" style="background-color: #f8f3e4; border-radius: 12px;">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="card-title" style="color: #4d3f2b;"><%= item[:book].title %></h5>
+                    <p style="margin: 0; color: #4d3f2b;"><strong>Quantity:</strong> <%= item[:quantity] %></p>
+                    <p style="margin: 0; color: #4d3f2b;"><strong>Total:</strong> $<%= item[:total_price] %></p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <%= link_to 'Remove', remove_from_cart_path(book_id: item[:book].id), method: :delete, class: "btn btn-outline-danger btn-sm me-3" %>
+                    <%= form_with url: update_quantity_path(book_id: item[:book].id), method: :patch, class: "d-flex align-items-center" do %>
+                      <%= number_field_tag :quantity, item[:quantity], min: 1, class: "form-control form-control-sm me-2", style: "width: 50px;" %>
+                      <%= submit_tag 'Update', class: "btn btn-outline-primary btn-sm" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <p class="text-center mt-4" style="font-size: 1.2rem; color: #4d3f2b;">
+              <strong>Total Price:</strong> $<%= @total_price %>
+            </p>
+          <% else %>
+            <p class="text-center" style="font-size: 1.2rem; color: #4d3f2b;">Your cart is empty.</p>
+          <% end %>
+
+          <!-- Back to Books Button -->
+          <div class="text-center mt-4">
+            <%= link_to "Back to Books", books_path, class: 'btn btn-secondary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

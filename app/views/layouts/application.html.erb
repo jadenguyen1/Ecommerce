@@ -27,33 +27,26 @@
         <a class="navbar-brand fs-1" href="/" style="font-size: 1.5rem;">Tall Tales Library</a>
 
         <% if session[:user_id] %>
-          <!-- Use a flexbox row to align username and logout button -->
           <div class="d-flex align-items-center">
-          <% if current_user.admin? %>
-            <!-- Admin Dashboard Button -->
-            <%= link_to 'Admin Dashboard', admin_dashboard_path, class: "btn btn-outline-dark fs-5 me-2" %>
-          <% end %>
-            <!-- Display username as a link to the user's profile -->
+            <% if current_user.admin? %>
+              <%= link_to 'Admin Dashboard', admin_dashboard_path, class: "btn btn-outline-dark fs-5 me-2" %>
+            <% end %>
             <%= link_to current_user.username, user_path(current_user), class: "btn btn-outline-dark fs-5 me-2" %>
-
-            <!-- Logout Button -->
             <%= link_to 'Logout', logout_path, method: :delete, class: "btn btn-outline-dark fs-5" %>
           </div>
         <% else %>
-          <!-- If the user is not logged in, display Log In/Sign Up button -->
           <a href="<%= login_path %>" class="btn btn-outline-dark fs-5">Login / Sign Up</a>
         <% end %>
       </div>
     </nav>
-
-
 
     <hr style="border: 1px solid black; margin: 0;">
 
     <!-- Horizontal Navbar for Links (underneath the brand) -->
     <nav class="navbar navbar-light" style="background-color: #8b6e4f;">
       <div class="container-fluid">
-        <ul class="navbar-nav justify-content-center flex-row w-100">
+        <!-- Navbar links as a flex row (Ensure the container takes full width) -->
+        <ul class="navbar-nav d-flex w-100 m-0 flex-row justify-content-between">
           <li class="nav-item fs-5 px-2">
             <%= link_to 'Books', books_path, class: 'nav-link text-dark' %>
           </li>
@@ -74,6 +67,14 @@
           </li>
           <li class="nav-item fs-5 px-2">
             <%= link_to 'Search', search_path, class: 'nav-link text-dark' %>
+          </li>
+
+          <!-- Shopping Cart Icon - Aligned to the far right -->
+          <li class="nav-item ms-auto">
+            <%= link_to cart_path, class: 'btn btn-outline-dark fs-5' do %>
+              <i class="fas fa-shopping-cart"></i>
+              Cart (<%= session[:cart]&.values&.sum || 0 %>)
+            <% end %>
           </li>
         </ul>
       </div>

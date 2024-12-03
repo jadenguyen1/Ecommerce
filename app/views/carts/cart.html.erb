@@ -1,0 +1,20 @@
+<h1>Your Shopping Cart</h1>
+
+<% if @cart_items.any? %>
+  <ul>
+    <% @cart_items.each do |item| %>
+      <li>
+        <%= item[:book].title %> (x<%= item[:quantity] %>) - $<%= item[:total_price] %>
+        <%= link_to 'Remove', remove_from_cart_path(book_id: item[:book].id), method: :delete %>
+        <%= form_with url: update_quantity_path(book_id: item[:book].id), method: :patch do %>
+          <%= number_field_tag :quantity, item[:quantity], min: 1 %>
+          <%= submit_tag 'Update Quantity' %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <p><strong>Total Price:</strong> $<%= @total_price %></p>
+  <%= link_to 'Proceed to Checkout', checkout_path, class: 'btn btn-primary' %>
+<% else %>
+  <p>Your cart is empty.</p>
+<% end %>

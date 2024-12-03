@@ -35,9 +35,11 @@ Rails.application.routes.draw do
     patch 'update_pages', to: 'dashboard#update_pages'
   end
 
-  get 'contact', to: 'pages#contact', as: 'contact'
-  get 'about', to: 'pages#about', as: 'about'
-  resources :pages
+  resources :books, only: [:index, :show]
+  post 'add_to_cart', to: 'carts#add_to_cart', as: 'add_to_cart'
+  get 'cart', to: 'carts#show', as: 'cart'
+  get 'remove_from_cart/:book_id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
+  patch 'update_quantity/:book_id', to: 'carts#update_quantity', as: 'update_quantity'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

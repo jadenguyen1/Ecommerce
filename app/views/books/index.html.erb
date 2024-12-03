@@ -28,8 +28,9 @@
             </p>
             <p class="card-text" style="font-size: 0.9rem; color: #4d3f2b; flex-grow: 1; overflow: hidden;"><%= truncate(book.description, length: 250) %></p>
             <p class="text-center" style="color: #4d3f2b;"><strong>Price:</strong> $<%= book.price %></p>
-            <div class="text-center">
+            <div class="d-flex justify-content-around mt-3text-center">
               <%= link_to "Show this book", book, class: 'btn btn-primary' %>
+              <%= button_to 'Add to Cart', add_to_cart_path(book_id: book.id), method: :post, class: 'btn btn-success' %>
             </div>
           </div>
         </div>
