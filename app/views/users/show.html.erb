@@ -6,17 +6,73 @@
       <div class="card border-light shadow-lg" style="background-color: #f4f1e1; border-radius: 12px; padding: 15px;">
         <div class="card-body">
           <!-- User's Name (Username) -->
-          <h2 class="card-title text-center" style="font-size: 2rem; color: #4d3f2b;"><%= current_user.username %></h2>
+          <div class="text-center">
+            <p style="font-size: 1.8rem; font-weight: bold; color: #4d3f2b;"><%= current_user.username %></p>
+          </div>
 
           <!-- User's Address, Province, and Role with consistent style -->
           <div class="text-center" style="color: #4d3f2b;">
-            <p style="font-size: 1.1rem;">
+            <p style="font-size: 1.1rem; margin-bottom: 10px;">
               <strong>Address:</strong> <%= current_user.address.presence || "Not provided" %>
             </p>
-            <p style="font-size: 1.1rem;">
+            <p style="font-size: 1.1rem; margin-bottom: 10px;">
               <strong>Province:</strong> <%= current_user.province.name if current_user.province %>
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User's Orders -->
+  <div class="row justify-content-center mt-2">
+    <div class="col-md-10">
+      <div class="card border-light shadow-lg" style="background-color: #f4f1e1; border-radius: 12px; padding: 15px;">
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <p style="font-size: 1.8rem; font-weight: bold; color: #4d3f2b;">Your Orders</p>
+          </div>
+
+          <% if current_user.orders.any? %>
+            <div class="list-group">
+              <% current_user.orders.each do |order| %>
+                <div class="list-group-item mb-3" style="background-color: #f8f3e4; border-radius: 12px; padding: 15px;">
+
+                  <!-- Order Total -->
+                  <div class="mb-2">
+                    <p style="font-size: 1.2rem; font-weight: bold; color: #4d3f2b;">
+                      Total: <%= number_to_currency(order.total_price) %>
+                    </p>
+                  </div>
+
+                  <!-- Order Date -->
+                  <div class="mb-2">
+                    <p style="font-size: 1.1rem; color: #4d3f2b;">
+                      <strong>Order Date:</strong> <%= order.order_date.strftime("%B %d, %Y") %>
+                    </p>
+                  </div>
+
+                  <!-- Items in the Order -->
+                  <div class="mb-3">
+                    <p style="font-size: 1.1rem; font-weight: bold; color: #4d3f2b; margin-bottom: 10px;">
+                      Items in this Order:
+                    </p>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                      <% order.order_items.each do |item| %>
+                        <li style="font-size: 1.1rem; color: #4d3f2b; padding-bottom: 8px;">
+                          <%= item.book.title %> (x<%= item.quantity %>) - <%= number_to_currency(item.unit_price) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center">
+              <p style="font-size: 1.2rem; color: #4d3f2b;">You have no orders yet.</p>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

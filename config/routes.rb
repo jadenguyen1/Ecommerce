@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get "dashboard/index"
   end
+  root "books#index"
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
     patch 'update_pages', to: 'dashboard#update_pages'
   end
 
+  resources :orders, only: [:new, :create, :show]
   resources :books, only: [:index, :show]
   post 'add_to_cart', to: 'carts#add_to_cart', as: 'add_to_cart'
   get 'cart', to: 'carts#show', as: 'cart'

@@ -1,70 +1,99 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :authenticate_user, only: [:new, :create] # Redirects non-logged-in users to login page
 
-  # GET /orders or /orders.json
-  def index
-    @orders = Order.all
-  end
-
-  # GET /orders/1 or /orders/1.json
-  def show
-  end
-
-  # GET /orders/new
   def new
     @order = Order.new
+    @provinces = Province.all
+    @cart_total = calculate_cart_total
+    @subtotal = @cart_total || 0 # Sum of all items in the cart before tax.
+
+    # Get cart items from session
+    @cart_items = session[:cart] || {}
+
+    if current_user
+      @user_address = current_user.address
+      @user_province = current_user.province
+    end
+
+    # Tax rate based on the user's province
+    @tax_rate = @user_province ? @user_province.tax_rate : 0
+
+    # Tax amount
+    @tax_amount = (@subtotal * @tax_rate).round(2)
+
+    # Total with taxes
+    @total_with_tax = (@subtotal + @tax_amount).round(2)
   end
 
-  # GET /orders/1/edit
-  def edit
-  end
-
-  # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
+    @provinces = Province.all
+    ActiveRecord::Base.transaction do
+      if current_user
+        # If the user is logged in, automatically assign the logged-in user to the order
+        @order.user = current_user
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        # If the user is not logged in, redirect to login page
+        redirect_to login_path, alert: "You must be logged in to complete the order." and return
       end
-    end
-  end
 
-  # PATCH/PUT /orders/1 or /orders/1.json
-  def update
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: "Order was successfully updated." }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+      @cart_total = calculate_cart_total
+    @subtotal = @cart_total || 0 # Sum of all items in the cart before tax.
+
+    # Tax rate based on the selected province
+    @selected_province = Province.find_by(id: @order.user.province_id)
+    @tax_rate = @selected_province ? @selected_province.tax_rate : 0
+
+    # Tax amount
+    @tax_amount = (@subtotal * @tax_rate).round(2)
+
+    # Total with taxes
+    @total_with_tax = (@subtotal + @tax_amount).round(2)
+
+    @order.total_price = @total_with_tax
+
+      # Save the order with the total price and other details
+      @order.order_date = Time.now
+      @order.save!
+
+      # Create order items for each item in the cart
+      session[:cart]&.each do |book_id, quantity|
+        book = Book.find(book_id)
+        @order.order_items.create!(book: book, quantity: quantity, unit_price: book.price)
       end
+
+      # Clear the shopping cart after saving the order
+      session.delete(:cart)
+
+      # Redirect to the books page or a success page
+      redirect_to books_path, notice: "Order completed successfully!"
     end
+  rescue ActiveRecord::RecordInvalid => e
+    render :new, alert: "An error occurred. Please try again."
   end
 
-  # DELETE /orders/1 or /orders/1.json
-  def destroy
-    @order.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to orders_path, status: :see_other, notice: "Order was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  def show
+    @order = Order.find(params[:id])
+    # You can also load associated order items if needed
+    @order_items = @order.order_items
   end
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:user_id, :order_date, :total_price)
-    end
+  def authenticate_user
+    redirect_to login_path, alert: "You must be logged in to complete the order." unless current_user
+  end
+
+  def calculate_cart_total
+    subtotal = session[:cart]&.sum do |book_id, quantity|
+      book = Book.find(book_id)
+      book.price * quantity
+    end || 0
+  end
+
+  def order_params
+    # This will permit user_id if the user is logged in.
+    params.require(:order).permit(:total_price, order_items_attributes: [:book_id, :quantity, :unit_price])
+  end
 end
