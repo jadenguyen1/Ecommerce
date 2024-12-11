@@ -23,7 +23,7 @@ class Admin::AuthorsController < Admin::DashboardController
   def create
     @author = Author.new(author_params)
     if @author.save
-      redirect_to admin_authors_path, notice: 'Author successfully created.'
+      redirect_to admin_authors_path, notice: "Author successfully created."
     else
       render :new
     end
@@ -43,5 +43,4 @@ class Admin::AuthorsController < Admin::DashboardController
   def author_params
     params.require(:author).permit(:name)
   end
-
 end

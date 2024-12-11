@@ -30,10 +30,10 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
 
       # Redirect to the root page or user profile
-      redirect_to @user, notice: 'Account created successfully.'
+      redirect_to @user, notice: "Account created successfully."
     else
       logger.error "User creation failed: #{@user.errors.full_messages.join(', ')}"
-      flash.now[:alert] = 'Error creating account.'
+      flash.now[:alert] = "Error creating account."
       render :new
     end
   end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, notice: "User was successfully updated."
     else
-      flash.now[:alert] = 'Error updating user.'
+      flash.now[:alert] = "Error updating user."
       render :edit
     end
   end
@@ -66,4 +66,4 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
-  end
+end

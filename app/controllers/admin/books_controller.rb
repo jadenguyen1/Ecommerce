@@ -1,22 +1,22 @@
 class Admin::BooksController < Admin::DashboardController
-  before_action :set_book, only: [:edit, :update, :destroy]
+  before_action :set_book, only: [ :edit, :update, :destroy ]
 
   def index
     @books = Book.all
 
     # Default sorting direction
-    direction = params[:direction] == 'desc' ? 'desc' : 'asc'
+    direction = params[:direction] == "desc" ? "desc" : "asc"
 
     # Handle sorting by title, author, price, or genre
     if params[:sort_by].present?
       case params[:sort_by]
-      when 'title'
+      when "title"
         @books = @books.order("title #{direction}")
-      when 'author'
+      when "author"
         @books = @books.joins(:author).order("authors.name #{direction}")
-      when 'price'
+      when "price"
         @books = @books.order("price #{direction}")
-      when 'genre'
+      when "genre"
         @books = @books.joins(:genre).order("genres.name #{direction}")
       end
     end
@@ -48,9 +48,9 @@ class Admin::BooksController < Admin::DashboardController
   def destroy
     @book = Book.find(params[:id])
     if @book.destroy
-      redirect_to admin_books_path, notice: 'Book was successfully deleted.'
+      redirect_to admin_books_path, notice: "Book was successfully deleted."
     else
-      redirect_to admin_books_path, alert: 'Unable to delete the book.'
+      redirect_to admin_books_path, alert: "Unable to delete the book."
     end
   end
 

@@ -18,7 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
-gem 'faker', '~> 3.5.1'
+gem "faker", "~> 3.5.1"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -33,17 +33,17 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-gem 'devise'
-gem 'bootstrap', '~> 5.3'
-gem 'sassc-rails'
-gem 'jquery-rails'
-gem 'bcrypt', '~> 3.1.11'
-gem 'kaminari'
-gem 'kaminari-bootstrap'
-gem 'activeadmin'
-gem 'image_processing', '~> 1.2'
-gem 'mini_magick'
-
+gem "devise"
+gem "bootstrap", "~> 5.3"
+gem "sassc-rails"
+gem "jquery-rails"
+gem "bcrypt", "~> 3.1.11"
+gem "kaminari"
+gem "kaminari-bootstrap"
+gem "activeadmin"
+gem "image_processing", "~> 1.2"
+gem "mini_magick"
+gem "rubocop"
 
 
 

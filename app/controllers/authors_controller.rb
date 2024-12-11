@@ -24,7 +24,7 @@ class AuthorsController < ApplicationController
   def create
     @author = Author.new(author_params)
     if @author.save
-      redirect_to admin_authors_path, notice: 'Author successfully created.'
+      redirect_to admin_authors_path, notice: "Author successfully created."
     else
       render :new
     end

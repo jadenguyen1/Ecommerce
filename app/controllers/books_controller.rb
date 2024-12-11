@@ -14,7 +14,6 @@ class BooksController < ApplicationController
     end
 
     @books = @books.page(params[:page]).per(15)
-
   end
   # GET /books/1 or /books/1.json
   def show
@@ -57,9 +56,9 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     if @book.destroy
-      redirect_to admin_books_path, notice: 'Book was successfully deleted.'
+      redirect_to admin_books_path, notice: "Book was successfully deleted."
     else
-      redirect_to admin_books_path, alert: 'Unable to delete the book.'
+      redirect_to admin_books_path, alert: "Unable to delete the book."
     end
   end
 

@@ -20,10 +20,12 @@
                   </div>
                   <div class="d-flex align-items-center">
                     <%= link_to 'Remove', remove_from_cart_path(book_id: item[:book].id), method: :delete, class: "btn btn-outline-danger btn-sm me-3" %>
-                    <%= form_with url: update_quantity_path(book_id: item[:book].id), method: :patch, class: "d-flex align-items-center" do %>
+                    <form action="<%= update_quantity_path(book_id: item[:book].id) %>" method="post" class="d-flex align-items-center">
+                      <input type="hidden" name="_method" value="patch">
+                      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                       <%= number_field_tag :quantity, item[:quantity], min: 1, class: "form-control form-control-sm me-2", style: "width: 50px;" %>
-                      <%= submit_tag 'Update', class: "btn btn-outline-primary btn-sm" %>
-                    <% end %>
+                      <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                    </form>
                   </div>
                 </div>
               </div>

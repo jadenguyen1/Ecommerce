@@ -68,10 +68,12 @@
     <!-- Action Buttons -->
     <div class="text-center mt-4">
       <%= link_to "Back to Books", books_path, class: 'btn btn-secondary me-3' %>
-      <%= form_with model: @order, url: orders_path, class: "d-inline-block" do |f| %>
-        <%= f.hidden_field :user_id, value: current_user.id %> <!-- Hidden field for user_id -->
-        <%= f.submit "Complete Order", class: "btn btn-success" %>
-      <% end %>
+      <form action="/orders" method="post" class="d-inline-block" autocomplete="on">
+        <input type="hidden" name="authenticity_token" value="-z5-Evir55FbvQGELRWJVXtVhBo14Rj0DQsz2qaovZ7IYI84xkrXHWlCmlXe-JtUPo5xiZhR2Ak4iTUa7O4BUA">
+        <input type="hidden" name="user_id" value="<%= current_user.id %>">
+        <button type="submit" class="btn btn-success">Complete Order</button>
+      </form>
+
     </div>
 
   </div>

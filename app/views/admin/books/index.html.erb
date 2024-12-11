@@ -25,7 +25,7 @@
           <td>
             <% if book.image.attached? %>
 
-              <%= image_tag book.image.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+              <%= image_tag book.image.variant(resize_to_limit: [100, 100]), alt: "Cover image of #{book.title}", class: "img-thumbnail" %>
               <br>
               <small><%= book.image.filename.to_s %></small>
             <% else %>
@@ -35,7 +35,11 @@
           <td>
             <div class="d-flex">
               <%= link_to "Edit", edit_admin_book_path(book), class: "btn btn-warning btn-sm me-2" %>
-              <%= button_to "Delete", admin_book_path(book), method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Are you sure?" } %>
+              <form action="/books/1" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn btn-danger btn-sm" data-confirm="Are you sure?">Delete</button>
+                <input type="hidden" name="authenticity_token" value="5fOPE4kjA33_7KdJnoLKrdhQtdFZgt1ju132kCTJhf_EYmpEOTuXn0kG1nn4iW_nrNfXheG4cx6_7OFbzvG4ow">
+              </form>
             </div>
           </td>
         </tr>

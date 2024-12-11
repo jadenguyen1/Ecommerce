@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user, only: [:new, :create] # Redirects non-logged-in users to login page
+  before_action :authenticate_user, only: [ :new, :create ] # Redirects non-logged-in users to login page
 
   def new
     @order = Order.new
@@ -94,6 +94,6 @@ class OrdersController < ApplicationController
 
   def order_params
     # This will permit user_id if the user is logged in.
-    params.require(:order).permit(:total_price, order_items_attributes: [:book_id, :quantity, :unit_price])
+    params.require(:order).permit(:total_price, order_items_attributes: [ :book_id, :quantity, :unit_price ])
   end
 end
